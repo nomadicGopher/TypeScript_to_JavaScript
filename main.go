@@ -19,13 +19,11 @@ var (
 	jsCode     []byte
 	filePath   string
 	minifyFlag bool
-	strictFlag bool
 )
 
 func main() {
 	flag.StringVar(&filePath, "file", "scripts.ts", "path to the TypeScript file")
 	flag.BoolVar(&minifyFlag, "minify", false, "minify the JavaScript output")
-	flag.BoolVar(&strictFlag, "strict", false, `add "use strict"; to the JavaScript output`)
 	flag.Parse()
 
 	if tsCode, err = os.ReadFile(filePath); err != nil {
@@ -39,13 +37,6 @@ func main() {
 		log.Fatalf("Error transpiling TypeScript: %v", err)
 	}
 
-	if strictFlag {
-		if minifyFlag {
-			jsCodeStr = `"use strict";` + jsCodeStr
-		} else {
-			jsCodeStr = `"use strict";\n` + jsCodeStr
-		}
-	}
 	jsCode = []byte(jsCodeStr)
 
 	if minifyFlag {

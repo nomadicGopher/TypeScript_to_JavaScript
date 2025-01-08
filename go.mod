@@ -12,5 +12,5 @@ require (
 	github.com/dop251/goja v0.0.0-20211115154819-26ebff68a7d5 // indirect
 	github.com/go-sourcemap/sourcemap v2.1.3+incompatible // indirect
 	github.com/tdewolff/parse/v2 v2.7.19 // indirect
-	golang.org/x/text v0.3.6 // indirect
+	golang.org/x/text v0.3.8 // indirect
 )

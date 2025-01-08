@@ -1,2 +1,4 @@
 *.log
 vendor
+*.js
+*.js.min

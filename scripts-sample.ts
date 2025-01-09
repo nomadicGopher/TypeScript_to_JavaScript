@@ -1,3 +1,3 @@
 "use strict";
-let message: string = "Hello, World!";
-console.log(message);
+let sample: string = "Hello, World!";
+console.log(sample);

@@ -1,0 +1,17 @@
+{
+    // https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "",
+            "type": "go",
+            "request": "launch",
+            "mode": "auto",
+            "program": "main.go",
+            "args": [
+                "-minify"
+                "-filePath=C:/Users/jonat/go/src/github.com/nomadicGopher/DirectCMS/web/scripts.ts"
+            ]
+        }
+    ]
+}

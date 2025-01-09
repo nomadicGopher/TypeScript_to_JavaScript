@@ -3,7 +3,6 @@ package main
 import (
 	"bytes"
 	"flag"
-	"fmt"
 	"log"
 	"os"
 	"path/filepath"
@@ -22,15 +21,13 @@ var (
 )
 
 func main() {
-	flag.StringVar(&filePath, "file", "scripts.ts", "path to the TypeScript file")
+	flag.StringVar(&filePath, "filePath", "scripts.ts", "path to the TypeScript file")
 	flag.BoolVar(&minifyFlag, "minify", false, "minify the JavaScript output")
 	flag.Parse()
 
 	if tsCode, err = os.ReadFile(filePath); err != nil {
 		log.Fatalf("Error reading file: %v", err)
 	}
-
-	// log.Printf("TypeScript Code: \n%s\n----------\n", string(tsCode))
 
 	jsCodeStr, err := typescript.TranspileString(string(tsCode))
 	if err != nil {
@@ -54,11 +51,21 @@ func main() {
 		ext = ".js.min"
 	}
 
-	jsFilePath := filepath.Join(filepath.Dir(filePath), filepath.Base(filePath[:len(filePath)-len(filepath.Ext(filePath))])+ext)
+	var jsFilePath string
+	if filePath != "scripts.ts" {
+		jsFilePath = filepath.Join(filepath.Dir(filePath), filepath.Base(filePath[:len(filePath)-len(filepath.Ext(filePath))])+ext)
+	} else {
+		root, err := os.Getwd()
+		if err != nil {
+			log.Fatalf("Error getting working directory: %v", err)
+		}
+
+		jsFilePath = filepath.Join(root, filepath.Base(filePath[:len(filePath)-len(filepath.Ext(filePath))])+ext)
+	}
 
 	if err = os.WriteFile(jsFilePath, jsCode, 0o644); err != nil {
 		log.Fatalf("Error writing to file: %v", err)
 	}
 
-	fmt.Println("JavaScript file created (or overwritten):", jsFilePath)
+	log.Println("JavaScript file created (or overwritten) at...\n", jsFilePath)
 }

@@ -10,7 +10,7 @@
             "program": "main.go",
             "args": [
                 "-minify"
-                "-filePath=C:/Users/jonat/go/src/github.com/nomadicGopher/DirectCMS/web/scripts.ts"
+                //"-filePath=C:/Users/$USER/go/src/github.com/nomadicGopher/DirectCMS/web/scripts.ts"
             ]
         }
     ]

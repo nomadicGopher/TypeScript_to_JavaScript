@@ -16,7 +16,6 @@ import (
 const streamThreshold = 10 * 1024 * 1024 // 10 MB
 
 var (
-	err        error
 	tsCode     []byte
 	jsCode     []byte
 	filePath   string
@@ -29,41 +28,30 @@ func main() {
 	flag.Parse()
 
 	fileInfo, err := os.Stat(filePath)
-	if err != nil {
-		log.Fatalf("Error getting file info: %v", err)
-	}
+	checkError(err, "Error getting file info")
 
 	if fileInfo.Size() > streamThreshold {
 		tsCode, err = readFileStream(filePath)
 	} else {
 		tsCode, err = os.ReadFile(filePath)
 	}
-	if err != nil {
-		log.Fatalf("Error reading file: %v", err)
-	}
+	checkError(err, "Error reading file")
 
 	jsCodeStr, err := typescript.TranspileString(string(tsCode))
-	if err != nil {
-		log.Fatalf("Error transpiling TypeScript: %v", err)
-	}
+	checkError(err, "Error transpiling TypeScript")
 
 	jsCode = []byte(jsCodeStr)
 
 	if minifyFlag {
 		jsCode, err = minifyJavaScript(jsCode)
-		if err != nil {
-			log.Fatalf("Minify: %v", err)
-		}
+		checkError(err, "Minify")
 	}
 
 	jsFilePath, err := generateOutputFilePath(filePath, minifyFlag)
-	if err != nil {
-		log.Fatalf("Error generating output file path: %v", err)
-	}
+	checkError(err, "Error generating output file path")
 
-	if err = os.WriteFile(jsFilePath, jsCode, 0o644); err != nil {
-		log.Fatalf("Error writing to file: %v", err)
-	}
+	err = os.WriteFile(jsFilePath, jsCode, 0o644)
+	checkError(err, "Error writing to file")
 
 	log.Println("JavaScript file created (or overwritten) at...\n", jsFilePath)
 }
@@ -109,4 +97,10 @@ func generateOutputFilePath(filePath string, minifyFlag bool) (string, error) {
 	}
 
 	return filepath.Join(root, baseName+ext), nil
+}
+
+func checkError(err error, message string) {
+	if err != nil {
+		log.Fatalf("%s: %v", message, err)
+	}
 }

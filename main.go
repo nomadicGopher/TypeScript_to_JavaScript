@@ -13,60 +13,65 @@ import (
 	"github.com/tdewolff/minify/v2/js"
 )
 
-const streamThreshold = 10 * 1024 * 1024 // 10 MB
-
 var (
-	tsCode     []byte
-	jsCode     []byte
-	filePath   string
-	minifyFlag bool
+	tsCode             []byte
+	jsCode             []byte
+	filePath           string
+	minifyFlag         bool
+	streamMinThreshold int64
 )
 
 func main() {
-	flag.StringVar(&filePath, "filePath", "scripts.ts", "path to the TypeScript file")
-	flag.BoolVar(&minifyFlag, "minify", false, "minify the JavaScript output")
+	flag.StringVar(&filePath, "file", "scripts.ts", "Path to the TypeScript file.")
+	flag.BoolVar(&minifyFlag, "minify", false, "Minify the JavaScript output.")
+	flag.Int64Var(&streamMinThreshold, "stream", 10, "File streaming minimum threshold in megabytes.")
 	flag.Parse()
 
-	fileInfo, err := os.Stat(filePath)
-	checkError(err, "Error getting file info")
+	streamMinThreshold *= 1024 * 1024 // Convert streamMinThreshold from megabytes to bytes
 
-	if fileInfo.Size() > streamThreshold {
+	err := ProcessFile(filePath, minifyFlag)
+	checkError(err, "processing file")
+}
+
+func ProcessFile(filePath string, minifyFlag bool) error {
+	fileInfo, err := os.Stat(filePath)
+	checkError(err, "getting file info")
+
+	if fileInfo.Size() > streamMinThreshold {
 		tsCode, err = readFileStream(filePath)
 	} else {
 		tsCode, err = os.ReadFile(filePath)
 	}
-	checkError(err, "Error reading file")
+	checkError(err, "reading TypeScript file")
 
 	jsCodeStr, err := typescript.TranspileString(string(tsCode))
-	checkError(err, "Error transpiling TypeScript")
+	checkError(err, "transpiling TypeScript to JavaScript")
 
 	jsCode = []byte(jsCodeStr)
 
 	if minifyFlag {
 		jsCode, err = minifyJavaScript(jsCode)
-		checkError(err, "Minify")
+		checkError(err, "minifying JavaScript")
 	}
 
 	jsFilePath, err := generateOutputFilePath(filePath, minifyFlag)
-	checkError(err, "Error generating output file path")
+	checkError(err, "generating output file path")
 
 	err = os.WriteFile(jsFilePath, jsCode, 0o644)
-	checkError(err, "Error writing to file")
+	checkError(err, "writing JavaScript file")
 
-	log.Println("JavaScript file created (or overwritten) at...\n", jsFilePath)
+	log.Println("JavaScript file written to:\n", jsFilePath)
+	return nil
 }
 
 func readFileStream(filePath string) ([]byte, error) {
 	file, err := os.Open(filePath)
-	if err != nil {
-		return nil, err
-	}
+	checkError(err, "opening file")
 	defer file.Close()
 
 	var buf bytes.Buffer
-	if _, err := io.Copy(&buf, file); err != nil {
-		return nil, err
-	}
+	_, err = io.Copy(&buf, file)
+	checkError(err, "reading file stream")
 	return buf.Bytes(), nil
 }
 
@@ -74,9 +79,8 @@ func minifyJavaScript(jsCode []byte) ([]byte, error) {
 	m := minify.New()
 	m.AddFunc("application/javascript", js.Minify)
 	var minified bytes.Buffer
-	if err := m.Minify("application/javascript", &minified, bytes.NewReader(jsCode)); err != nil {
-		return nil, err
-	}
+	err := m.Minify("application/javascript", &minified, bytes.NewReader(jsCode))
+	checkError(err, "minifying JavaScript")
 	return minified.Bytes(), nil
 }
 
@@ -92,15 +96,13 @@ func generateOutputFilePath(filePath string, minifyFlag bool) (string, error) {
 	}
 
 	root, err := os.Getwd()
-	if err != nil {
-		return "", err
-	}
+	checkError(err, "getting current working directory")
 
 	return filepath.Join(root, baseName+ext), nil
 }
 
 func checkError(err error, message string) {
 	if err != nil {
-		log.Fatalf("%s: %v", message, err)
+		log.Fatalf("Error %s: %v", message, err)
 	}
 }

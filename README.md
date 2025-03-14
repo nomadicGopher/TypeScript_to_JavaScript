@@ -1,6 +1,8 @@
 ## Instrucions
-* Download the executable or the main.go and add a scripts.ts file in the same directory.
-* Run the program with the following potential flags: `typescript2javascript.exe -minify`
+1. Download your OS's version of the prgoram from [Releases](https://github.com/nomadicGopher/TypeScript_to_JavaScript/releases).
+2. Add a scripts.ts file in the same directory or remember to set the -file command-line-argument if it is outside of the program's directory.
+3. Run the program with the following potential flags: `typescript2javascript.exe -minify -stream=#.##`
+
 ```
 -file string
     Path to the TypeScript file. (default "scripts.ts")

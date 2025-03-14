@@ -1,4 +1,4 @@
-module github.com/nomadicGopher/typescript2javascript
+module github.com/nomadicGopher/TypeScript_to_JavaScript
 
 go 1.20
 

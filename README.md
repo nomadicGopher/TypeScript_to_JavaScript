@@ -3,15 +3,15 @@
     * **TypeScript_to_JavaScript.exe**: Windows
     * **TypeScript_to_JavaScript**: Linux
 2. Add a scripts.ts file in the same directory, or remember to set the -file command-line-argument if it is outside the program's directory.
-3. Run the program with the following potential flags: `TypeScript_to_JavaScript.exe -minify -stream=#.##`
+3. Run the program with the following potential flags:
 
 ```
 -file string
     Path to the TypeScript file. (default "scripts.ts")
--minify
+-minify bool
     Minify the JavaScript output.
--stream int
-    File streaming minimum threshold in megabytes. (default 10)
+-stream float64
+    File streaming minimum threshold in megabytes. (default 2.5)
 ```
 
 ## Sample TypeScript content

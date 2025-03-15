@@ -3,7 +3,7 @@
     * **TypeScript_to_JavaScript.exe**: Windows
     * **TypeScript_to_JavaScript**: Linux
 2. Add a scripts.ts file in the same directory, or remember to set the -file command-line-argument if it is outside the program's directory.
-3. Run the program with the following potential flags: `typescript2javascript.exe -minify -stream=#.##`
+3. Run the program with the following potential flags: `TypeScript_to_JavaScript.exe -minify -stream=#.##`
 
 ```
 -file string

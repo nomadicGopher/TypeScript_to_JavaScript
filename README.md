@@ -1,4 +1,4 @@
-## Instructions
+### Instructions
 1. Download your OS's version of the program from [Releases](https://github.com/nomadicGopher/TypeScript_to_JavaScript/releases).
     * **TypeScript_to_JavaScript.exe**: Windows
     * **TypeScript_to_JavaScript**: Linux
@@ -14,7 +14,7 @@
     File streaming minimum threshold in megabytes. (default 2.5)
 ```
 
-## Sample TypeScript content
+### Sample TypeScript content
 ```typescript
 // Define an interface for a Person
 interface Person {
@@ -58,3 +58,20 @@ console.log(student.greet());
 // Call the getStudentId method
 console.log(`My student ID is ${student.getStudentId()}.`);
 ```
+
+---
+
+### Support This Developer
+* [**GitHub Sponsors**](https://github.com/sponsors/nomadicGopher)
+* [**Ko-Fi**](https://ko-fi.com/nomadicGopher)
+
+<details>
+  <summary><b>Crypto Currencies</b></summary>
+  <ul>
+    <li><b>ETH</b>: 0x7531d86D5Dbda398369ec43205F102e79B3c647A</li>
+    <li><b>BTC</b>: bc1qtkuzp85vph7y37rqjlznuta293qsay07cgg90s</li>
+    <li><b>LTC</b>: ltc1q9pquzquaj6peplygqdrcxxvcnd5fcud7x80lh8</li>
+    <li><b>DOGE</b>: DNQ3GHBVEcNpzXNeB7B4sPqd7L1GhUpMg3</li>
+    <li><b>SOL</b>: EQ6QwibvKZsazjvQGJk6fsGW4BQSDS1Zs6Dj79HfVvME</li>
+  </ul>
+</details>

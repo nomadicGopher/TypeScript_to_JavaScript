@@ -6,8 +6,8 @@
             "name": "",
             "type": "go",
             "request": "launch",
-            "mode": "auto",
-            "program": "main.go",
+            "mode": "debug",
+            "program": "*",
             "args": [
                 "-minify"
                 //"-filePath=C:/Users/$USER/go/src/github.com/nomadicGopher/DirectCMS/web/scripts.ts"

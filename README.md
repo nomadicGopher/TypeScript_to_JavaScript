@@ -1,6 +1,3 @@
-> [!NOTE]
-> For a more feature rich tool, I recommend [**Microsoft's typescript-go**](https://github.com/microsoft/typescript-go) wich was announced shortly after completing this project.
-
 ### Instructions
 1. Download your OS's version of the program from [Releases](https://github.com/nomadicGopher/TypeScript_to_JavaScript/releases).
     * **TypeScript_to_JavaScript.exe**: Windows

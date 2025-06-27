@@ -1,4 +1,11 @@
-### Instructions
+<p align="center">
+   <img src="thumbnail.png" alt="Typescript to JavaScript" width="50%"/>
+</p>
+
+# Typescript to JavaScript
+A dependency-free TypeScript to JavaScript CLI interpreter with minification support.
+
+## Instructions
 1. Download your OS's version of the program from [Releases](https://github.com/nomadicGopher/TypeScript_to_JavaScript/releases).
     * **TypeScript_to_JavaScript.exe**: Windows
     * **TypeScript_to_JavaScript**: Linux
@@ -14,7 +21,7 @@
     File streaming minimum threshold in megabytes. (default 2.5)
 ```
 
-### Sample TypeScript content
+## Sample TypeScript content
 ```typescript
 // Define an interface for a Person
 interface Person {

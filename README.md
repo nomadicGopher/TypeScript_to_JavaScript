@@ -3,7 +3,7 @@
 </p>
 
 # Typescript to JavaScript
-A dependency-free TypeScript to JavaScript CLI interpreter with minification support.
+A TypeScript to JavaScript CLI interpreter written in Go with minification support.
 
 ## Instructions
 1. Download your OS's version of the program from [Releases](https://github.com/nomadicGopher/TypeScript_to_JavaScript/releases).

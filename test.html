@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Test JS In Browser</title>
+    <script src="scripts.js" defer></script>
+    <style>
+        body {
+            background-color: #333333;
+            color: whitesmoke;
+            min-height: 100vh;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        h2 {
+            text-align: center;
+        }
+        pre {
+            background-color: whitesmoke;
+            width: 80vw;
+            max-width: 80vw;
+            box-sizing: border-box;
+            border-radius: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div>
+        <h2>Console Output</h2>
+        <pre style="color: #333333; padding: 1em;" id="output"></pre>
+
+        &nbsp;
+
+        <h2>Console Errors</h2>
+        <pre style="color: lightcoral;" id="errors">
+            <ul id="console-errors-list"></ul>
+        </pre>
+    </div>
+
+    <script>
+    // Override console.log to print to #output (console output)
+    (function() {
+        const outputPre = document.getElementById('output');
+        const errorsPre = document.getElementById('errors');
+        const errorsList = document.getElementById('console-errors-list');
+        // Save original functions
+        const origLog = console.log;
+        const origError = console.error;
+
+        // Helper to append to output
+        function appendToOutput(msg) {
+            // Remove initial text if present
+            if (outputPre.textContent === 'sdds') outputPre.textContent = '';
+            outputPre.textContent += msg + '\n';
+        }
+
+        // Helper to append to errors
+        function appendToErrors(msg) {
+            const li = document.createElement('li');
+            li.textContent = msg;
+            errorsList.appendChild(li);
+        }
+
+        console.log = function(...args) {
+            origLog.apply(console, args);
+            appendToOutput(args.map(String).join(' '));
+        };
+
+        console.error = function(...args) {
+            origError.apply(console, args);
+            appendToErrors(args.map(String).join(' '));
+        };
+
+        // Also catch uncaught errors
+        window.addEventListener('error', function(event) {
+            appendToErrors(event.message);
+        });
+    })();
+    </script>
+</body>
+</html>

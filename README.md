@@ -57,13 +57,13 @@ class Student implements Person {
 }
 
 // Create an instance of the Student class
-const student = new Student("John", "Doe", 20, 12345);
+const me = new Student("John", "Doe", 20, 12345);
 
 // Call the greet method
-console.log(student.greet());
+console.log(me.greet());
 
 // Call the getStudentId method
-console.log(`My student ID is ${student.getStudentId()}.`);
+console.log(`My student ID is ${me.getStudentId()}.`);
 ```
 
 ---
